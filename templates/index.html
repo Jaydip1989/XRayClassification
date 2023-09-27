@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>X-Ray Disease Classification</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+        crossorigin="anonymous">
+        <style>
+            .bg-img{
+                width:100%;
+                height:100vh;
+                background-image: linear-gradient(rgba(0,0,0,0.71), rgba(0, 0, 0, 0.7)),
+                    url('static/bg/Chest-x-RAY.jpeg');
+            }
+            h1{
+                color: ghostwhite;
+                font-size: 18px;
+            }
+            .posFirst{
+                position: relative;
+                left: 550px;
+                right:550px;
+                width: 300px;
+            }
+            .prevImage{
+                height: 300px;
+                width: 300px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="bg-img">
+            <h1 class="text-center">X-Ray Image Classifier</h1>
+            {% if filename %}
+                <div class="posFirst">
+                    <img class="prevImage" src = "{{ url_for('display_image', filename=filename)}}">
+                </div>
+            {% endif %}
+            <form class="p-3 text-center", action="/", method="post", enctype="multipart/form-data">
+                <input class="form-control-md" type="file" name="imagefile">
+                <button type="submit" class="btn btn-primary mb-3">Predict</button>
+            </form>
+            {% if prediction,confidence %}
+                <p style="text-align: center; color:rgb(42, 165, 79); font-size: 18px;">
+                    Image shows {{prediction}} with confidence of {{confidence}}.
+                </p>
+            {% endif %}
+        </div>
+    </body>
+</html>
